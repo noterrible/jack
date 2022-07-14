@@ -13,9 +13,11 @@ import com.my.reggie.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -32,7 +34,8 @@ public class DishController {
     private CategoryService categoryService;
     @Autowired
     private DishFlavorService dishFlavorService;
-
+    @Autowired
+    private RedisTemplate redisTemplate;
     /*
      * 菜品分页显示
      * */
@@ -112,6 +115,15 @@ public class DishController {
      }*/
     @GetMapping("/list")
     public R<List<DishDto>> list(Dish dish) {
+        List<DishDto> dishDtoList = null;
+        ///设置key
+        String key = "dish_" + dish.getCategoryId() + "_" + dish.getStatus();
+        //从redis中查询是否有，有则返回redis中数据
+        dishDtoList = (List<DishDto>) redisTemplate.opsForValue().get(key);
+        if(dishDtoList!=null){
+            return R.success(dishDtoList);
+        }
+
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper();
         //条件
         queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
@@ -121,7 +133,7 @@ public class DishController {
         queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         List<Dish> list = dishService.list(queryWrapper);
 
-        List<DishDto> dishDtoList = list.stream().map((item) -> {
+        dishDtoList = list.stream().map((item) -> {
             DishDto dishDto = new DishDto();
             BeanUtils.copyProperties(item, dishDto);
             Long categoryId = item.getCategoryId();
@@ -140,6 +152,8 @@ public class DishController {
             dishDto.setFlavors(flavors);
             return dishDto;
         }).collect(Collectors.toList());
+        //如果redis中不存在数据，将菜品数据写入缓存，60分钟过期
+        redisTemplate.opsForValue().set(key,dishDtoList,60, TimeUnit.MINUTES);
         return R.success(dishDtoList);
     }
 }
