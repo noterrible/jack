@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -76,12 +77,33 @@ public class DishController {
     @PostMapping
     public R<String> save(@RequestBody DishDto dishDto) {
         dishService.saveWithFlavor(dishDto);
+
+        /*//后台更新菜品，清理所有菜品缓存数据
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);*/
+
+        //清理对应分类菜品
+        String key = "dish_" + dishDto.getCategoryId() +"_1";
+        redisTemplate.delete(key);
+
         return R.success("添加菜品成功");
     }
 
     @DeleteMapping
     public R<String> delete(Long ids) {
+        //获取菜品分类id，为删除redis缓存做准备
+        Dish dish = dishService.getById(ids);
+        //删除菜品
         dishService.removeById(ids);
+
+        /*//后台更新菜品，清理所有菜品缓存数据
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);*/
+
+        //清理redis对应分类菜品缓存
+        String key = "dish_" + dish.getCategoryId() +"_1";
+        redisTemplate.delete(key);
+
         return R.success("删除菜品成功");
     }
 
@@ -98,6 +120,14 @@ public class DishController {
     @PutMapping
     public R<String> update(@RequestBody DishDto dishDto) {
         dishService.updateWithFlavor(dishDto);
+
+        /*//后台更新菜品，清理所有菜品缓存数据
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);*/
+        //清理对应分类菜品
+        String key = "dish_" + dishDto.getCategoryId() +"_1";
+        redisTemplate.delete(key);
+
         return R.success("更新菜品成功");
     }
 
