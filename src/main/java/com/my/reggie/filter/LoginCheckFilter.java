@@ -33,7 +33,12 @@ public class LoginCheckFilter implements Filter {
                 "/front/**",
                 //移动端登陆页面放行
                 "/user/sendMsg",//发送验证码
-                "/user/login"
+                "/user/login",
+                //Swagger
+                "/doc.html",
+                "/webjars/**",
+                "/swagger-resources",
+                "/v2/api-docs"
         };
         log.info("获得请求:" + requestURI);
         //判断请求页面是否需要拦截
