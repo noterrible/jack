@@ -91,7 +91,7 @@ public class DishController {
 
     @DeleteMapping
     public R<String> delete(@RequestParam List<Long> ids) {
-        //获取菜品分类id，为删除redis缓存
+        //获取菜品分类id，删除redis缓存
         for(Long id : ids) {
             Dish dish = dishService.getById(id);
             //清理redis对应分类菜品缓存
@@ -147,11 +147,14 @@ public class DishController {
          List<Dish> list = dishService.list(queryWrapper);
          return R.success(list);
      }*/
+    /*
+    * 菜品分类显示
+    * */
     @GetMapping("/list")
     public R<List<DishDto>> list(Dish dish) {
         List<DishDto> dishDtoList = null;
         ///设置key
-        String key = "dish_" + dish.getCategoryId() + "_" + dish.getStatus();
+        String key = "dish_" + dish.getCategoryId() + "_1";
         //从redis中查询是否有，有则返回redis中数据
         dishDtoList = (List<DishDto>) redisTemplate.opsForValue().get(key);
         if(dishDtoList!=null){

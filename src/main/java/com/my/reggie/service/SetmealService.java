@@ -7,7 +7,16 @@ import com.my.reggie.entity.Setmeal;
 import java.util.List;
 
 public interface SetmealService extends IService<Setmeal> {
-    public void saveWithDish(SetmealDto setmealDto);
+    void saveWithDish(SetmealDto setmealDto);
 
-    public void removeWithDish(List<Long> ids);
+    void removeWithDish(List<Long> ids);
+
+
+    void stopByIds(List<Long> ids);
+
+    void startByIds(List<Long> ids);
+
+    SetmealDto getWithDish(Long id);
+
+    void updateWithDish(SetmealDto setmealDto);
 }

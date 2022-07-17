@@ -87,10 +87,28 @@ public class SetmealController {
         setmealService.removeWithDish(ids);
         return R.success("已删除该套餐");
     }
-
+    @PostMapping("/status/0")
+    public  R<String> stop(@RequestParam List<Long> ids){
+        setmealService.stopByIds(ids);
+        return R.success("停售成功");
+    }
+    @PostMapping("/status/1")
+    public  R<String> start(@RequestParam List<Long> ids){
+        setmealService.startByIds(ids);
+        return R.success("停售成功");
+    }
     @GetMapping("/{id}")
     public R<SetmealDto> getById(@PathVariable Long id) {
-
-        return null;
+        //获取套餐
+        SetmealDto setmealDto = setmealService.getWithDish(id);
+        if( setmealDto!=null){
+            return R.success(setmealDto);
+        }
+        return R.error("没有改套餐");
+    }
+    @PutMapping
+    public R<String> update(@RequestBody SetmealDto setmealDto){
+        setmealService.updateWithDish(setmealDto);
+        return R.success("修改套餐成功");
     }
 }

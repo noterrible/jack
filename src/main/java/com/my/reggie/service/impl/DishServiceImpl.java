@@ -69,7 +69,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         queryWrapper.eq(DishFlavor::getDishId, dishDto.getId());
         dishFlavorService.remove(queryWrapper);
         //更新当前菜品口味数据，insert
-
         List<DishFlavor> flavors = dishDto.getFlavors();
         flavors.stream().map((item) -> {
             item.setDishId(dishDto.getId());
