@@ -38,7 +38,7 @@ public class CategoryController {
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
 
         //根据sort列属性排序
-        queryWrapper.orderByDesc(Category::getSort);
+        queryWrapper.orderByAsc(Category::getSort);
         //执行查询
         categoryService.page(pageInfo, queryWrapper);
         return R.success(pageInfo);
@@ -48,10 +48,10 @@ public class CategoryController {
      * 根据id删除菜品分类
      * */
     @DeleteMapping
-    public R<String> delete(Long ids) {
+    public R<String> delete(Long id) {
 
         //categoryService.removeById(ids);可能管理菜品和套餐，该方法慎用
-        categoryService.remove(ids);
+        categoryService.remove(id);
         return R.success("删除菜品分类成功");
     }
 
@@ -75,7 +75,7 @@ public class CategoryController {
         //添加条件
         queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
         //添加排序
-        queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+        queryWrapper.orderByAsc(Category::getSort).orderByAsc(Category::getUpdateTime);
         List<Category> list = categoryService.list(queryWrapper);
         return R.success(list);
     }

@@ -90,19 +90,23 @@ public class DishController {
     }
 
     @DeleteMapping
-    public R<String> delete(Long ids) {
-        //获取菜品分类id，为删除redis缓存做准备
-        Dish dish = dishService.getById(ids);
+    public R<String> delete(@RequestParam List<Long> ids) {
+        //获取菜品分类id，为删除redis缓存
+        for(Long id : ids) {
+            Dish dish = dishService.getById(id);
+            //清理redis对应分类菜品缓存
+            String key = "dish_" + dish.getCategoryId() + "_1";
+            redisTemplate.delete(key);
+        }
+
         //删除菜品
-        dishService.removeById(ids);
+        dishService.removeByIds(ids);
 
         /*//后台更新菜品，清理所有菜品缓存数据
         Set keys = redisTemplate.keys("dish_*");
         redisTemplate.delete(keys);*/
 
-        //清理redis对应分类菜品缓存
-        String key = "dish_" + dish.getCategoryId() +"_1";
-        redisTemplate.delete(key);
+
 
         return R.success("删除菜品成功");
     }
