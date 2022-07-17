@@ -50,4 +50,4 @@ mybatis-plus:
     db-config:
       id-type: ASSIGN_ID
 reggie:
-  path: D:\IdeaProject\rj_takeout\jpg\
+  path: /usr/local/img
