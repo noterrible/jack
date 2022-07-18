@@ -40,7 +40,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     /*
      * 扩展spring mvc的消息转换器
      * */
-
     @Override
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         //创建消息转换器
@@ -50,7 +49,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         //将上方转换器加入到mvc转换器框架合集中
         converters.add(0, messageConverter);
     }
-
+    /*
+    * swagger
+    * */
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
