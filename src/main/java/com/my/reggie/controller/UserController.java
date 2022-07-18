@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -71,6 +72,7 @@ public class UserController {
             if (user == null) {
                 user = new User();
                 user.setPhone(phone);
+                user.setName(String.valueOf(user.getPhone().hashCode()));
                 user.setStatus(1);
                 userService.save(user);
             }
@@ -81,5 +83,9 @@ public class UserController {
         }
         return R.error("验证码或手机号错误");
     }
-
+    @PostMapping("/loginout")
+    public R<String> loginout(HttpServletRequest request){
+        request.getSession().removeAttribute("employee");
+        return R.success("退出登录成功");
+    }
 }
