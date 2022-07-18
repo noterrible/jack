@@ -44,8 +44,9 @@ public class OrderController {
         orderService.page(pageInfo, queryWrapper);
         return R.success(pageInfo);
     }
+
     @PutMapping
-    public  R<String> send(@RequestBody Orders orders){
+    public R<String> send(@RequestBody Orders orders) {
         Orders orders1 = orderService.getById(orders);
         orders1.setStatus(orders.getStatus());
         orderService.updateById(orders1);

@@ -36,6 +36,7 @@ public class DishController {
     private DishFlavorService dishFlavorService;
     @Autowired
     private RedisTemplate redisTemplate;
+
     /*
      * 菜品分页显示
      * */
@@ -82,7 +83,7 @@ public class DishController {
         redisTemplate.delete(keys);*/
 
         //清理对应分类菜品
-        String key = "dish_" + dishDto.getCategoryId() +"_1";
+        String key = "dish_" + dishDto.getCategoryId() + "_1";
         redisTemplate.delete(key);
 
         return R.success("添加菜品成功");
@@ -91,7 +92,7 @@ public class DishController {
     @DeleteMapping
     public R<String> delete(@RequestParam List<Long> ids) {
         //获取菜品分类id，删除redis缓存
-        for(Long id : ids) {
+        for (Long id : ids) {
             Dish dish = dishService.getById(id);
             //清理redis对应分类菜品缓存
             String key = "dish_" + dish.getCategoryId() + "_1";
@@ -104,7 +105,6 @@ public class DishController {
         /*//后台更新菜品，清理所有菜品缓存数据
         Set keys = redisTemplate.keys("dish_*");
         redisTemplate.delete(keys);*/
-
 
 
         return R.success("删除菜品成功");
@@ -128,7 +128,7 @@ public class DishController {
         Set keys = redisTemplate.keys("dish_*");
         redisTemplate.delete(keys);*/
         //清理对应分类菜品
-        String key = "dish_" + dishDto.getCategoryId() +"_1";
+        String key = "dish_" + dishDto.getCategoryId() + "_1";
         redisTemplate.delete(key);
 
         return R.success("更新菜品成功");
@@ -147,8 +147,8 @@ public class DishController {
          return R.success(list);
      }*/
     /*
-    * 菜品分类显示
-    * */
+     * 菜品分类显示
+     * */
     @GetMapping("/list")
     public R<List<DishDto>> list(Dish dish) {
         List<DishDto> dishDtoList = null;
@@ -156,7 +156,7 @@ public class DishController {
         String key = "dish_" + dish.getCategoryId() + "_1";
         //从redis中查询是否有，有则返回redis中数据
         dishDtoList = (List<DishDto>) redisTemplate.opsForValue().get(key);
-        if(dishDtoList!=null){
+        if (dishDtoList != null) {
             return R.success(dishDtoList);
         }
 
@@ -189,7 +189,7 @@ public class DishController {
             return dishDto;
         }).collect(Collectors.toList());
         //如果redis中不存在数据，将菜品数据写入缓存，60分钟过期
-        redisTemplate.opsForValue().set(key,dishDtoList,60, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(key, dishDtoList, 60, TimeUnit.MINUTES);
         return R.success(dishDtoList);
     }
 }

@@ -29,6 +29,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
     private ShoppingCartService shoppingCartService;
     @Autowired
     private OrderDetailService orderDetailService;
+
     @Override
     @Transactional
     public void submit(Orders orders) {
@@ -66,8 +67,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         }).collect(Collectors.toList());
         //向订单插入一条数据
         /*
-        * 设置orders
-        * */
+         * 设置orders
+         * */
         orders.setId(orderId);
         orders.setNumber(String.valueOf(orders));
         orders.setOrderTime(LocalDateTime.now());

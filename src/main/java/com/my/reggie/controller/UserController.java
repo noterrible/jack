@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.my.reggie.common.R;
 import com.my.reggie.entity.User;
 import com.my.reggie.service.UserService;
-import com.my.reggie.utils.SMSUtils;
 import com.my.reggie.utils.ValidateCodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ public class UserController {
     private UserService userService;
     @Autowired
     private RedisTemplate redisTemplate;
+
     @PostMapping("/sendMsg")
     public R<String> sendMsg(@RequestBody User user, HttpSession session) {
         //获取手机号
@@ -43,7 +43,7 @@ public class UserController {
             取消session缓存验证码，用redis实现缓存
             session.setAttribute(phone, code);*/
             //设置缓存验证码，设置有效期为5分钟
-            redisTemplate.opsForValue().set(phone,code,5, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(phone, code, 5, TimeUnit.MINUTES);
             return R.success("已成功发送验证码");
         }
         return R.error("发送失败");
@@ -83,8 +83,9 @@ public class UserController {
         }
         return R.error("验证码或手机号错误");
     }
+
     @PostMapping("/loginout")
-    public R<String> loginout(HttpServletRequest request){
+    public R<String> loginout(HttpServletRequest request) {
         request.getSession().removeAttribute("employee");
         return R.success("退出登录成功");
     }

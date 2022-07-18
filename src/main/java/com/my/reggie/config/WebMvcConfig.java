@@ -48,8 +48,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         //设置对象转换器，底层使用JackJson将java对象转为Json
         messageConverter.setObjectMapper(new JacksonObjectMapper());
         //将上方转换器加入到mvc转换器框架合集中
-        converters.add(0,messageConverter);
+        converters.add(0, messageConverter);
     }
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -59,6 +60,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                 .paths(PathSelectors.any())
                 .build();
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("瑞吉外卖项目接口文档")

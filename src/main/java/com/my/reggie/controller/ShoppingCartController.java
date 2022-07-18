@@ -3,14 +3,11 @@ package com.my.reggie.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.my.reggie.common.BaseContext;
 import com.my.reggie.common.R;
-import com.my.reggie.dto.DishDto;
-import com.my.reggie.entity.Dish;
 import com.my.reggie.entity.ShoppingCart;
 import com.my.reggie.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 
