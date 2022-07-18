@@ -6,7 +6,6 @@ import com.my.reggie.common.BaseContext;
 import com.my.reggie.common.R;
 import com.my.reggie.entity.Orders;
 import com.my.reggie.service.OrderService;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +43,12 @@ public class OrderController {
         queryWrapper.orderByAsc(Orders::getCheckoutTime);
         orderService.page(pageInfo, queryWrapper);
         return R.success(pageInfo);
+    }
+    @PutMapping
+    public  R<String> send(@RequestBody Orders orders){
+        Orders orders1 = orderService.getById(orders);
+        orders1.setStatus(orders.getStatus());
+        orderService.updateById(orders1);
+        return R.success("已更新信息");
     }
 }
