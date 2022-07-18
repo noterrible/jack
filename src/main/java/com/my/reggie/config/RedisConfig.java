@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /*
-* 在RedisDesktopManager中可以直观看到key，防止观察到机器码
+* 在RedisDesktopManager中可以直观看到key
 * */
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {

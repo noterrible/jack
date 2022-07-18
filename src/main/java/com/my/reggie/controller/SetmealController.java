@@ -64,7 +64,8 @@ public class SetmealController {
         setmealDtoPage.setRecords(list);
         return R.success(setmealDtoPage);
     }
-    @Cacheable(value = "setmealCache",key = "#setmeal.categoryId+'_'+#setmeal.status")
+
+    @Cacheable(value = "setmealCache", key = "#setmeal.categoryId+'_'+#setmeal.status")
     @GetMapping("/list")
     public R<List<Setmeal>> list(Setmeal setmeal) {
         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
@@ -74,40 +75,48 @@ public class SetmealController {
         List<Setmeal> list = setmealService.list(queryWrapper);
         return R.success(list);
     }
-    @CacheEvict(value = "setmealCache",allEntries = true)
+
+    @CacheEvict(value = "setmealCache", allEntries = true)
     @PostMapping
     public R<String> save(@RequestBody SetmealDto setmealDto) {
         setmealService.saveWithDish(setmealDto);
         return R.success("保存套餐成功");
     }
 
-    @CacheEvict(value = "setmealCache",allEntries = true)
+    @CacheEvict(value = "setmealCache", allEntries = true)
     @DeleteMapping
     public R<String> delete(@RequestParam List<Long> ids) {
+        if (ids.isEmpty()) {
+            return R.error("没有选择套餐");
+        }
         setmealService.removeWithDish(ids);
         return R.success("已删除该套餐");
     }
+
     @PostMapping("/status/0")
-    public  R<String> stop(@RequestParam List<Long> ids){
+    public R<String> stop(@RequestParam List<Long> ids) {
         setmealService.stopByIds(ids);
         return R.success("停售成功");
     }
+
     @PostMapping("/status/1")
-    public  R<String> start(@RequestParam List<Long> ids){
+    public R<String> start(@RequestParam List<Long> ids) {
         setmealService.startByIds(ids);
         return R.success("停售成功");
     }
+
     @GetMapping("/{id}")
     public R<SetmealDto> getById(@PathVariable Long id) {
         //获取套餐
         SetmealDto setmealDto = setmealService.getWithDish(id);
-        if( setmealDto!=null){
+        if (setmealDto != null) {
             return R.success(setmealDto);
         }
         return R.error("没有改套餐");
     }
+
     @PutMapping
-    public R<String> update(@RequestBody SetmealDto setmealDto){
+    public R<String> update(@RequestBody SetmealDto setmealDto) {
         setmealService.updateWithDish(setmealDto);
         return R.success("修改套餐成功");
     }
