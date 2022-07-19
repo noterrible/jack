@@ -2,6 +2,7 @@ package com.my.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.my.reggie.common.R;
+import com.my.reggie.common.SendEmail;
 import com.my.reggie.entity.User;
 import com.my.reggie.service.UserService;
 import com.my.reggie.utils.ValidateCodeUtils;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -29,13 +31,19 @@ public class UserController {
     private RedisTemplate redisTemplate;
 
     @PostMapping("/sendMsg")
-    public R<String> sendMsg(@RequestBody User user, HttpSession session) {
+    public R<String> sendMsg(@RequestBody User user/*HttpSession session*/) {
         //获取手机号
         String phone = user.getPhone();
         if (phone != null) {
             //生成随机验证码
             String code = ValidateCodeUtils.generateValidateCode(4).toString();
             log.info("打印验证码:" + code);
+            //采用邮箱发送验证码
+            try {
+                SendEmail.sendMassage(phone,code);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
             //调用阿里云接口发送短信
             //SMSUtils.sendMessage("瑞吉外卖",phone,code);
             //生成验证码保存到session

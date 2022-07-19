@@ -60,6 +60,7 @@
             methods:{
                 getCode(){
                     this.form.code = ''
+                    /*去掉手机号限制，使用邮箱号
                     const regex = /^(13[0-9]{9})|(15[0-9]{9})|(17[0-9]{9})|(18[0-9]{9})|(19[0-9]{9})$/;
                     if (regex.test(this.form.phone)) {
                         this.msgFlag = false
@@ -67,7 +68,8 @@
                         sendMsgApi({phone:this.form.phone})
                     }else{
                         this.msgFlag = true
-                    }
+                    }*/
+                    sendMsgApi({phone:this.form.phone})
                 },
                 async btnLogin(){
                     if(this.form.phone && this.form.code){
