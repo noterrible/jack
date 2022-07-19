@@ -6,10 +6,12 @@ import com.my.reggie.common.BaseContext;
 import com.my.reggie.common.R;
 import com.my.reggie.entity.Orders;
 import com.my.reggie.service.OrderService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/order")
@@ -18,12 +20,12 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("/page")
-    public R<Page<Orders>> page(int page, int pageSize, String number, LocalDateTime beginTime, LocalDateTime endTime) {
+    public R<Page<Orders>> page(int page, int pageSize, String number, String beginTime,String endTime) {
         Page pageInfo = new Page(page, pageSize);
         LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
-        /*queryWrapper.eq(StringUtils.isNotEmpty(number), Orders::getNumber, number);
+        queryWrapper.like(StringUtils.isNotEmpty(number), Orders::getNumber, number);
         queryWrapper.ge(beginTime != null, Orders::getOrderTime, beginTime);
-        queryWrapper.le(endTime != null, Orders::getOrderTime, endTime);*/
+        queryWrapper.le(endTime != null, Orders::getOrderTime, endTime);
         queryWrapper.orderByDesc(Orders::getCheckoutTime);
         orderService.page(pageInfo, queryWrapper);
         return R.success(pageInfo);
