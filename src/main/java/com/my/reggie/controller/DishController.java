@@ -133,7 +133,19 @@ public class DishController {
 
         return R.success("更新菜品成功");
     }
-
+    /*
+    *停售启售
+    * */
+    @PostMapping("/status/0")
+    public R<String> stopSale(@RequestParam List<Long> ids){
+        dishService.stopByIds(ids);
+        return R.success("停售成功");
+    }
+    @PostMapping("/status/1")
+    public R<String> sale(@RequestParam List<Long> ids){
+        dishService.saleByIds(ids);
+        return R.success("停售成功");
+    }
     /* @GetMapping("/list")
      public R<List<Dish>> list(Dish dish){
          LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper();

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ReggieApplication {
     public static void main(String[] args) {
         SpringApplication.run(ReggieApplication.class,args);
-        log.info("项目成功启动，请访问'http://localhost:8080/backend/page/login/login.html'");
-        log.info("移动端请访问'http://localhost:8080/front/page/login.html'");
+        log.info("项目成功启动，请访问'http://8.130.102.52:8080/backend/page/login/login.html'");
+        log.info("移动端请访问'http://8.130.102.52:8080/front/page/login.html'");
     }
 }

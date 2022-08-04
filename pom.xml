@@ -13,6 +13,7 @@
     <groupId>com.itheima</groupId>
     <artifactId>reggie_take_out</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -29,11 +30,12 @@
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>3.0.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-            <version>4.0.0-RC1</version>
-        </dependency>
+<!--        若不使用读写分离，引入报错-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.shardingsphere</groupId>-->
+<!--            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>-->
+<!--            <version>4.0.0-RC1</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
