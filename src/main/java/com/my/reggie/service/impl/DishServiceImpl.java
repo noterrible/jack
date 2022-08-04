@@ -82,7 +82,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     public void stopByIds(List<Long> ids) {
         for(Long id:ids){
             Dish dish = this.getById(id);
-            dish.setStatus(1);
+            dish.setStatus(0);
             this.updateById(dish);
         }
     }
@@ -91,7 +91,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     public void saleByIds(List<Long> ids) {
         for(Long id:ids){
             Dish dish = this.getById(id);
-            dish.setStatus(0);
+            dish.setStatus(1);
             this.updateById(dish);
         }
     }

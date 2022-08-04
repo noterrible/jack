@@ -144,7 +144,7 @@ public class DishController {
     @PostMapping("/status/1")
     public R<String> sale(@RequestParam List<Long> ids){
         dishService.saleByIds(ids);
-        return R.success("停售成功");
+        return R.success("启售成功");
     }
     /* @GetMapping("/list")
      public R<List<Dish>> list(Dish dish){

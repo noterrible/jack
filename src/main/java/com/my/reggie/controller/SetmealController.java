@@ -99,7 +99,7 @@ public class SetmealController {
     @PostMapping("/status/1")
     public R<String> start(@RequestParam List<Long> ids) {
         setmealService.startByIds(ids);
-        return R.success("停售成功");
+        return R.success("启售成功");
     }
 
     @GetMapping("/{id}")
