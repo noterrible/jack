@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 /**
  * 菜品口味
  */
+@ApiModel("菜品口味")
 @Data
 public class DishFlavor implements Serializable {
 
@@ -20,15 +23,15 @@ public class DishFlavor implements Serializable {
     private Long id;
 
 
-    //菜品id
+    @ApiModelProperty("菜品id")
     private Long dishId;
 
 
-    //口味名称
+    @ApiModelProperty("口味名称")
     private String name;
 
 
-    //口味数据list
+    @ApiModelProperty("口味数据list")
     private String value;
 
 
@@ -48,7 +51,7 @@ public class DishFlavor implements Serializable {
     private Long updateUser;
 
 
-    //是否删除
+    @ApiModelProperty("是否删除")
     private Integer isDeleted;
 
 }

@@ -6,6 +6,7 @@ import com.my.reggie.common.SendEmail;
 import com.my.reggie.entity.User;
 import com.my.reggie.service.UserService;
 import com.my.reggie.utils.ValidateCodeUtils;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
+@Api(tags="用户相关接口")
 @Slf4j
 @RestController
 @RequestMapping("/user")

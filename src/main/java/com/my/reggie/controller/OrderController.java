@@ -6,13 +6,14 @@ import com.my.reggie.common.BaseContext;
 import com.my.reggie.common.R;
 import com.my.reggie.entity.Orders;
 import com.my.reggie.service.OrderService;
+import io.swagger.annotations.Api;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-
+@Api(tags="订单相关接口")
 @RestController
 @RequestMapping("/order")
 public class OrderController {

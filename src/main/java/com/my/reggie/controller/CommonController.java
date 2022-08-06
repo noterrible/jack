@@ -1,6 +1,7 @@
 package com.my.reggie.controller;
 
 import com.my.reggie.common.R;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import java.util.UUID;
 /*
  *文件上传下载
  * */
+@Api(tags="文件上传下载相关接口")
 @RestController
 @RequestMapping("/common")
 public class CommonController {

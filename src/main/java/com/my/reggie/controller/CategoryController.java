@@ -5,12 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.my.reggie.common.R;
 import com.my.reggie.entity.Category;
 import com.my.reggie.service.CategoryService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Api(tags="套餐分类相关接口")
 @Slf4j
 @RestController
 @RequestMapping("/category")

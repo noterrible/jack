@@ -6,6 +6,7 @@ import com.my.reggie.common.BaseContext;
 import com.my.reggie.common.R;
 import com.my.reggie.entity.AddressBook;
 import com.my.reggie.service.AddressBookService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * 地址簿管理
  */
+@Api(tags="地址相关接口")
 @Slf4j
 @RestController
 @RequestMapping("/addressBook")

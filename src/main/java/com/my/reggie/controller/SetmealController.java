@@ -9,6 +9,7 @@ import com.my.reggie.entity.Setmeal;
 import com.my.reggie.service.CategoryService;
 import com.my.reggie.service.SetmealDishService;
 import com.my.reggie.service.SetmealService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Api(tags="套餐相关接口")
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {
