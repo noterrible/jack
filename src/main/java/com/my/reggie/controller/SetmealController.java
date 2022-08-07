@@ -30,12 +30,14 @@ public class SetmealController {
     private CategoryService categoryService;
 
     @GetMapping("/page")
-    public R<Page> page(int page, int pageSize) {
+    public R<Page> page(int page, int pageSize ,String name) {
         //分页构造器
         Page<Setmeal> pageInfo = new Page<>(page, pageSize);
         Page<SetmealDto> setmealDtoPage = new Page<>();
         //条件构造器
         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper();
+        //按名称查找
+        queryWrapper.like(name != null,Setmeal::getName,name);
         //按照name排序
         queryWrapper.orderByAsc(Setmeal::getName);
         setmealService.page(pageInfo, queryWrapper);
