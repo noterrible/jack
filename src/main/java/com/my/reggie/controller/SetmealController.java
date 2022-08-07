@@ -10,6 +10,7 @@ import com.my.reggie.service.CategoryService;
 import com.my.reggie.service.SetmealDishService;
 import com.my.reggie.service.SetmealService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -30,6 +31,7 @@ public class SetmealController {
     private CategoryService categoryService;
 
     @GetMapping("/page")
+    @ApiOperation(value="套餐分页显示接口")
     public R<Page> page(int page, int pageSize ,String name) {
         //分页构造器
         Page<Setmeal> pageInfo = new Page<>(page, pageSize);
@@ -67,6 +69,7 @@ public class SetmealController {
 
     @Cacheable(value = "setmealCache", key = "#setmeal.categoryId+'_'+#setmeal.status")
     @GetMapping("/list")
+    @ApiOperation(value="按照套餐分类显示菜品接口")
     public R<List<Setmeal>> list(Setmeal setmeal) {
         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId());
@@ -78,6 +81,7 @@ public class SetmealController {
 
     @CacheEvict(value = "setmealCache", allEntries = true)
     @PostMapping
+    @ApiOperation(value="保存新增套餐接口")
     public R<String> save(@RequestBody SetmealDto setmealDto) {
         setmealService.saveWithDish(setmealDto);
         return R.success("保存套餐成功");
@@ -85,6 +89,7 @@ public class SetmealController {
 
     @CacheEvict(value = "setmealCache", allEntries = true)
     @DeleteMapping
+    @ApiOperation(value="删除套餐接口")
     public R<String> delete(@RequestParam List<Long> ids) {
         if (ids.isEmpty()) {
             return R.error("没有选择套餐");
@@ -94,18 +99,21 @@ public class SetmealController {
     }
 
     @PostMapping("/status/0")
+    @ApiOperation(value="停售套餐接口")
     public R<String> stop(@RequestParam List<Long> ids) {
         setmealService.stopByIds(ids);
         return R.success("停售成功");
     }
 
     @PostMapping("/status/1")
+    @ApiOperation(value="起售套餐接口")
     public R<String> start(@RequestParam List<Long> ids) {
         setmealService.startByIds(ids);
         return R.success("启售成功");
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value="修改套餐接口")
     public R<SetmealDto> getById(@PathVariable Long id) {
         //获取套餐
         SetmealDto setmealDto = setmealService.getWithDish(id);
@@ -116,6 +124,7 @@ public class SetmealController {
     }
 
     @PutMapping
+    @ApiOperation(value="保存修改套餐接口")
     public R<String> update(@RequestBody SetmealDto setmealDto) {
         setmealService.updateWithDish(setmealDto);
         return R.success("修改套餐成功");

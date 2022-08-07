@@ -6,6 +6,7 @@ import com.my.reggie.common.R;
 import com.my.reggie.entity.Employee;
 import com.my.reggie.service.EmployeeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class EmployeeController {
      * 员工登录
      * */
     @PostMapping("/login")
+    @ApiOperation(value="员工登录接口")
     public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
         //根据页面获取的psaaword进行md5加密
         String password = employee.getPassword();
@@ -55,6 +57,7 @@ public class EmployeeController {
      * 员工退出
      * */
     @PostMapping("/logout")
+    @ApiOperation(value="员工退出登录接口")
     public R<String> loginout(HttpServletRequest request) {
         request.getSession().removeAttribute("employee");
         return R.success("退出成功");
@@ -64,6 +67,7 @@ public class EmployeeController {
      * 添加员工
      * */
     @PostMapping()
+    @ApiOperation(value="保存员工接口")
     public R<String> save(HttpServletRequest request, @RequestBody Employee employee) {
         //添加员工，设置员工默认信息
         employee.setPassword(DigestUtils.md5DigestAsHex("111111".getBytes()));
@@ -82,6 +86,7 @@ public class EmployeeController {
      * 分页数据
      * */
     @GetMapping("/page")
+    @ApiOperation(value="员工分页显示接口")
     public R<Page> page(int page, int pageSize, String name) {
         //分页构造器
         Page pageInfo = new Page(page, pageSize);
@@ -99,7 +104,8 @@ public class EmployeeController {
     /*
      * 修改员工在帐号状态
      * */
-    @PutMapping()
+    @PutMapping
+    @ApiOperation(value="修改员工账号状态接口")
     public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         //由于Long型数据为19位，js处理精确为前16位，后几位相当于四舍五入，导致获取数据与数据库数据不一致
 //        Long empId = (Long) request.getSession().getAttribute("employee");
@@ -113,6 +119,7 @@ public class EmployeeController {
      * 修改员工账号
      * */
     @GetMapping("/{id}")
+    @ApiOperation(value="编辑员工信息接口")
     public R<Employee> getById(@PathVariable Long id) {
         Employee employee = employeeService.getById(id);
         if (employee != null) {

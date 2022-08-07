@@ -2,6 +2,7 @@ package com.my.reggie.controller;
 
 import com.my.reggie.common.R;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ public class CommonController {
     /*
      *file是临时文件，所以要储存起来
      * */
+    @ApiOperation(value="上传文件接口")
     public R<String> upload(MultipartFile file) {
         /*
          * 获取文件名
@@ -65,6 +67,7 @@ public class CommonController {
      * 文件下载
      * */
     @GetMapping("/download")
+    @ApiOperation(value="下载文件接口")
     public void download(String name, HttpServletResponse response) {
         try {
             //输入流，读取文件内容

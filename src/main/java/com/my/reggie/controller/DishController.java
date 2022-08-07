@@ -11,6 +11,7 @@ import com.my.reggie.service.CategoryService;
 import com.my.reggie.service.DishFlavorService;
 import com.my.reggie.service.DishService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class DishController {
      * 菜品分页显示
      * */
     @GetMapping("/page")
+    @ApiOperation(value="菜品分页显示接口")
     public R<Page> page(int page, int pageSize, String name) {
         //分页构造器
         Page<Dish> pageInfo = new Page<>(page, pageSize);
@@ -77,6 +79,7 @@ public class DishController {
     }
 
     @PostMapping
+    @ApiOperation(value="保存新增菜品信息接口")
     public R<String> save(@RequestBody DishDto dishDto) {
         dishService.saveWithFlavor(dishDto);
 
@@ -92,6 +95,7 @@ public class DishController {
     }
 
     @DeleteMapping
+    @ApiOperation(value="删除菜品接口")
     public R<String> delete(@RequestParam List<Long> ids) {
         //获取菜品分类id，删除redis缓存
         for (Long id : ids) {
@@ -114,6 +118,7 @@ public class DishController {
 
 
     @GetMapping("/{id}")
+    @ApiOperation(value="编辑菜品信息接口")
     public R<DishDto> getById(@PathVariable Long id) {
         DishDto dishDto = dishService.getByIdWithFlavor(id);
         if (dishDto != null) {
@@ -123,6 +128,7 @@ public class DishController {
     }
 
     @PutMapping
+    @ApiOperation(value="保存修改菜品信息接口")
     public R<String> update(@RequestBody DishDto dishDto) {
         dishService.updateWithFlavor(dishDto);
 
@@ -139,11 +145,13 @@ public class DishController {
     *停售启售
     * */
     @PostMapping("/status/0")
+    @ApiOperation(value="停售菜品接口")
     public R<String> stopSale(@RequestParam List<Long> ids){
         dishService.stopByIds(ids);
         return R.success("停售成功");
     }
     @PostMapping("/status/1")
+    @ApiOperation(value="起售菜品接口")
     public R<String> sale(@RequestParam List<Long> ids){
         dishService.saleByIds(ids);
         return R.success("启售成功");
@@ -161,9 +169,10 @@ public class DishController {
          return R.success(list);
      }*/
     /*
-     * 菜品分类显示
+     * 菜品按分类显示
      * */
     @GetMapping("/list")
+    @ApiOperation(value="菜品按分类显示接口")
     public R<List<DishDto>> list(Dish dish) {
         List<DishDto> dishDtoList = null;
         ///设置key

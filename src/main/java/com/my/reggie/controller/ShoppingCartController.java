@@ -6,6 +6,7 @@ import com.my.reggie.common.R;
 import com.my.reggie.entity.ShoppingCart;
 import com.my.reggie.service.ShoppingCartService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ public class ShoppingCartController {
      * 添加到购物车
      * */
     @PostMapping("/add")
+    @ApiOperation(value="添加菜品到购物车接口")
     public R<ShoppingCart> add(@RequestBody ShoppingCart shoppingCart) {
         //通过basecontext设置用户id
         Long currentId = BaseContext.getCurrentId();
@@ -57,6 +59,7 @@ public class ShoppingCartController {
      *减少商品
      * */
     @PostMapping("/sub")
+    @ApiOperation(value="从购物车减少菜品接口")
     public R<String> sub(@RequestBody ShoppingCart shoppingCart) {
         LambdaQueryWrapper<ShoppingCart> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());
@@ -90,6 +93,7 @@ public class ShoppingCartController {
      * 清空购物车
      * */
     @DeleteMapping("/clean")
+    @ApiOperation(value="清空购物车接口")
     public R<String> clean() {
         LambdaQueryWrapper<ShoppingCart> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());
@@ -101,6 +105,7 @@ public class ShoppingCartController {
      * 显示购物车
      * */
     @GetMapping("/list")
+    @ApiOperation(value="显示购物车所有菜品接口")
     public R<List<ShoppingCart>> list() {
         LambdaQueryWrapper<ShoppingCart> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());

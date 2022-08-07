@@ -6,6 +6,7 @@ import com.my.reggie.common.R;
 import com.my.reggie.entity.Category;
 import com.my.reggie.service.CategoryService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,18 +21,20 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /*
-     * 新增菜品分类
+     * 新增分类
      * */
     @PostMapping
+    @ApiOperation(value="新增菜品分类接口")
     public R<String> save(@RequestBody Category category) {
         categoryService.save(category);
         return R.success("新增菜品分类成功");
     }
 
     /*
-     * 菜品分类分页
+     * 分类分页
      * */
     @GetMapping("/page")
+    @ApiOperation(value="分类分页显示接口")
     public R<Page> page(int page, int pageSize) {
         //分页构造器
         Page<Category> pageInfo = new Page(page, pageSize);
@@ -49,6 +52,7 @@ public class CategoryController {
      * 根据id删除菜品分类
      * */
     @DeleteMapping
+    @ApiOperation(value="删除分类接口")
     public R<String> delete(Long id) {
 
         //categoryService.removeById(ids);可能管理菜品和套餐，该方法慎用
@@ -60,6 +64,7 @@ public class CategoryController {
     更新菜品类别
     * */
     @PutMapping
+    @ApiOperation(value="更新分类接口")
     public R<String> update(@RequestBody Category category) {
         //由于Category里加了注解,不需要设置修改时间，修改人的id等
         categoryService.updateById(category);
@@ -70,6 +75,7 @@ public class CategoryController {
      *菜品分类的数据
      * */
     @GetMapping("/list")
+    @ApiOperation(value="显示分类类型接口")
     public R<List<Category>> list(Category category) {
         //条件构造器
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();

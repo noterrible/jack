@@ -7,6 +7,7 @@ import com.my.reggie.common.R;
 import com.my.reggie.entity.Orders;
 import com.my.reggie.service.OrderService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("/page")
+    @ApiOperation(value="订单分页显示接口")
     public R<Page<Orders>> page(int page, int pageSize, String number, String beginTime,String endTime) {
         Page pageInfo = new Page(page, pageSize);
         LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
@@ -33,12 +35,14 @@ public class OrderController {
     }
 
     @PostMapping("/submit")
+    @ApiOperation(value="下单接口")
     public R<String> submit(@RequestBody Orders orders) {
         orderService.submit(orders);
         return R.success("下单成功");
     }
 
     @GetMapping("/userPage")
+    @ApiOperation(value="个人中心接口")
     public R<Page> userPage(int page, int pageSize) {
         Page pageInfo = new Page(page, pageSize);
         LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
@@ -49,6 +53,7 @@ public class OrderController {
     }
 
     @PutMapping
+    @ApiOperation(value="订单派送发起接口")
     public R<String> send(@RequestBody Orders orders) {
         Orders orders1 = orderService.getById(orders);
         orders1.setStatus(orders.getStatus());

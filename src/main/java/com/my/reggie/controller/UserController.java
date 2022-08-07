@@ -7,6 +7,7 @@ import com.my.reggie.entity.User;
 import com.my.reggie.service.UserService;
 import com.my.reggie.utils.ValidateCodeUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -59,6 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @ApiOperation(value="用户登录接口")
     public R<User> login(@RequestBody Map map, HttpSession session) {
         //获取手机号
         String phone = map.get("phone").toString();
@@ -94,6 +96,7 @@ public class UserController {
     }
 
     @PostMapping("/loginout")
+    @ApiOperation(value="用户登出接口")
     public R<String> loginout(HttpServletRequest request) {
         request.getSession().removeAttribute("employee");
         return R.success("退出登录成功");
