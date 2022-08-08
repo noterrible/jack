@@ -81,7 +81,7 @@ public class SetmealController {
 
     @CacheEvict(value = "setmealCache", allEntries = true)
     @PostMapping
-    @ApiOperation(value="保存新增套餐接口")
+    @ApiOperation(value="保存新增的套餐信息接口")
     public R<String> save(@RequestBody SetmealDto setmealDto) {
         setmealService.saveWithDish(setmealDto);
         return R.success("保存套餐成功");
@@ -113,7 +113,7 @@ public class SetmealController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value="修改套餐接口")
+    @ApiOperation(value="修改套餐信息接口")
     public R<SetmealDto> getById(@PathVariable Long id) {
         //获取套餐
         SetmealDto setmealDto = setmealService.getWithDish(id);
@@ -124,7 +124,7 @@ public class SetmealController {
     }
 
     @PutMapping
-    @ApiOperation(value="保存修改的套餐接口")
+    @ApiOperation(value="保存修改的套餐信息接口")
     public R<String> update(@RequestBody SetmealDto setmealDto) {
         setmealService.updateWithDish(setmealDto);
         return R.success("修改套餐成功");

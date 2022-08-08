@@ -128,7 +128,7 @@ public class DishController {
     }
 
     @PutMapping
-    @ApiOperation(value="保存修改的菜品接口")
+    @ApiOperation(value="保存修改的菜品信息接口")
     public R<String> update(@RequestBody DishDto dishDto) {
         dishService.updateWithFlavor(dishDto);
 
