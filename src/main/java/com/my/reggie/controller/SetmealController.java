@@ -69,7 +69,7 @@ public class SetmealController {
 
     @Cacheable(value = "setmealCache", key = "#setmeal.categoryId+'_'+#setmeal.status")
     @GetMapping("/list")
-    @ApiOperation(value="按照套餐分类显示菜品接口")
+    @ApiOperation(value="菜品按套餐分类显示接口")
     public R<List<Setmeal>> list(Setmeal setmeal) {
         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId());
@@ -124,7 +124,7 @@ public class SetmealController {
     }
 
     @PutMapping
-    @ApiOperation(value="保存修改套餐接口")
+    @ApiOperation(value="保存修改的套餐接口")
     public R<String> update(@RequestBody SetmealDto setmealDto) {
         setmealService.updateWithDish(setmealDto);
         return R.success("修改套餐成功");

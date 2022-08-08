@@ -31,7 +31,7 @@ public class AddressBookController {
      * 新增
      */
     @PostMapping
-    @ApiOperation(value="保存新增地址接口")
+    @ApiOperation(value="保存新增的地址信息接口")
     public R<AddressBook> save(@RequestBody AddressBook addressBook) {
         addressBook.setUserId(BaseContext.getCurrentId());
         log.info("addressBook:{}", addressBook);
@@ -45,7 +45,6 @@ public class AddressBookController {
     @PutMapping("default")
     @ApiOperation(value="设置默认地址接口")
     public R<AddressBook> setDefault(@RequestBody AddressBook addressBook) {
-        log.info("addressBook:{}", addressBook);
         LambdaUpdateWrapper<AddressBook> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(AddressBook::getUserId, BaseContext.getCurrentId());
         wrapper.set(AddressBook::getIsDefault, 0);
@@ -62,7 +61,7 @@ public class AddressBookController {
      * 根据id查询地址
      */
     @GetMapping("/{id}")
-    @ApiOperation(value="查询地址接口")
+    @ApiOperation(value="获取地址信息接口")
     public R get(@PathVariable Long id) {
         AddressBook addressBook = addressBookService.getById(id);
         if (addressBook != null) {
@@ -76,7 +75,7 @@ public class AddressBookController {
      * 查询默认地址
      */
     @GetMapping("default")
-    @ApiOperation(value="获得默认地址接口")
+    @ApiOperation(value="获取默认地址信息接口")
     public R<AddressBook> getDefault() {
         LambdaQueryWrapper<AddressBook> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(AddressBook::getUserId, BaseContext.getCurrentId());

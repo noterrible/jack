@@ -7,6 +7,7 @@ import com.my.reggie.entity.User;
 import com.my.reggie.service.UserService;
 import com.my.reggie.utils.ValidateCodeUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class UserController {
     private RedisTemplate redisTemplate;
 
     @PostMapping("/sendMsg")
+    @ApiOperation("发送验证码接口")
     public R<String> sendMsg(@RequestBody User user/*HttpSession session*/) {
         //获取手机号
         String phone = user.getPhone();

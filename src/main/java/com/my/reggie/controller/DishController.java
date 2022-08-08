@@ -79,7 +79,7 @@ public class DishController {
     }
 
     @PostMapping
-    @ApiOperation(value="保存新增菜品信息接口")
+    @ApiOperation(value="保存新增的菜品信息接口")
     public R<String> save(@RequestBody DishDto dishDto) {
         dishService.saveWithFlavor(dishDto);
 
@@ -118,7 +118,7 @@ public class DishController {
 
 
     @GetMapping("/{id}")
-    @ApiOperation(value="编辑菜品信息接口")
+    @ApiOperation(value="修改菜品信息接口")
     public R<DishDto> getById(@PathVariable Long id) {
         DishDto dishDto = dishService.getByIdWithFlavor(id);
         if (dishDto != null) {
@@ -128,7 +128,7 @@ public class DishController {
     }
 
     @PutMapping
-    @ApiOperation(value="保存修改菜品信息接口")
+    @ApiOperation(value="保存修改的菜品接口")
     public R<String> update(@RequestBody DishDto dishDto) {
         dishService.updateWithFlavor(dishDto);
 
@@ -172,7 +172,7 @@ public class DishController {
      * 菜品按分类显示
      * */
     @GetMapping("/list")
-    @ApiOperation(value="菜品按分类显示接口")
+    @ApiOperation(value="菜品按菜品分类显示接口")
     public R<List<DishDto>> list(Dish dish) {
         List<DishDto> dishDtoList = null;
         ///设置key

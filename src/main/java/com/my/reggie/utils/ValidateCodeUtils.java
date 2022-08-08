@@ -1,10 +1,13 @@
 package com.my.reggie.utils;
 
+import io.swagger.annotations.ApiModel;
+
 import java.util.Random;
 
 /**
  * 随机生成验证码工具类
  */
+@ApiModel("验证码工具类")
 public class ValidateCodeUtils {
     /**
      * 随机生成验证码

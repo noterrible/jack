@@ -67,7 +67,7 @@ public class EmployeeController {
      * 添加员工
      * */
     @PostMapping()
-    @ApiOperation(value="保存员工接口")
+    @ApiOperation(value="保存新增的员工信息接口")
     public R<String> save(HttpServletRequest request, @RequestBody Employee employee) {
         //添加员工，设置员工默认信息
         employee.setPassword(DigestUtils.md5DigestAsHex("111111".getBytes()));
@@ -105,7 +105,7 @@ public class EmployeeController {
      * 修改员工在帐号状态
      * */
     @PutMapping
-    @ApiOperation(value="修改员工账号状态接口")
+    @ApiOperation(value="保存编辑的员工信息接口")
     public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         //由于Long型数据为19位，js处理精确为前16位，后几位相当于四舍五入，导致获取数据与数据库数据不一致
 //        Long empId = (Long) request.getSession().getAttribute("employee");

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Api(tags="套餐分类相关接口")
+@Api(tags="分类相关接口")
 @Slf4j
 @RestController
 @RequestMapping("/category")
@@ -24,10 +24,13 @@ public class CategoryController {
      * 新增分类
      * */
     @PostMapping
-    @ApiOperation(value="新增菜品分类接口")
+    @ApiOperation(value="保存新增的分类信息接口")
     public R<String> save(@RequestBody Category category) {
         categoryService.save(category);
+        if(category.getType()==1)
         return R.success("新增菜品分类成功");
+        else
+        return R.success("新增套餐分类成功");
     }
 
     /*
@@ -64,7 +67,7 @@ public class CategoryController {
     更新菜品类别
     * */
     @PutMapping
-    @ApiOperation(value="更新分类接口")
+    @ApiOperation(value="修改分类信息接口")
     public R<String> update(@RequestBody Category category) {
         //由于Category里加了注解,不需要设置修改时间，修改人的id等
         categoryService.updateById(category);
