@@ -67,7 +67,7 @@ public class CategoryController {
     更新菜品类别
     * */
     @PutMapping
-    @ApiOperation(value="修改分类信息接口")
+    @ApiOperation(value="保存修改分类信息接口")
     public R<String> update(@RequestBody Category category) {
         //由于Category里加了注解,不需要设置修改时间，修改人的id等
         categoryService.updateById(category);
@@ -78,7 +78,7 @@ public class CategoryController {
      *菜品分类的数据
      * */
     @GetMapping("/list")
-    @ApiOperation(value="显示分类类型接口")
+    @ApiOperation(value="显示所有分类类型接口")
     public R<List<Category>> list(Category category) {
         //条件构造器
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
