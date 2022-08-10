@@ -1,9 +1,12 @@
 package com.my.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.my.reggie.common.BaseContext;
 import com.my.reggie.common.R;
 import com.my.reggie.common.SendEmail;
+import com.my.reggie.entity.ShoppingCart;
 import com.my.reggie.entity.User;
+import com.my.reggie.service.ShoppingCartService;
 import com.my.reggie.service.UserService;
 import com.my.reggie.utils.ValidateCodeUtils;
 import io.swagger.annotations.Api;
@@ -30,6 +33,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ShoppingCartService shoppingCartService;
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -100,7 +105,11 @@ public class UserController {
     @PostMapping("/loginout")
     @ApiOperation(value="用户登出接口")
     public R<String> loginout(HttpServletRequest request) {
-        request.getSession().removeAttribute("employee");
+        request.getSession().removeAttribute("user");
+        //退出登录清空购物车
+        LambdaQueryWrapper<ShoppingCart> queryWrapper =new LambdaQueryWrapper<>();
+        queryWrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());
+        shoppingCartService.remove(queryWrapper);
         return R.success("退出登录成功");
     }
 }

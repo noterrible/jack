@@ -59,32 +59,24 @@ public class ShoppingCartController {
      *减少商品
      * */
     @PostMapping("/sub")
-    @ApiOperation(value="从购物车减少菜品接口")
+    @ApiOperation(value = "从购物车减少菜品接口")
     public R<String> sub(@RequestBody ShoppingCart shoppingCart) {
         LambdaQueryWrapper<ShoppingCart> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());
         if (shoppingCart.getDishId() != null) {
-            //查菜品id
+            //查菜品
             queryWrapper.eq(ShoppingCart::getDishId, shoppingCart.getDishId());
-            ShoppingCart getOne = shoppingCartService.getOne(queryWrapper);
-            Integer number = getOne.getNumber();
-            if (number != 1) {
-                getOne.setNumber(number - 1);
-                shoppingCartService.updateById(getOne);
-            } else {
-                shoppingCartService.removeById(getOne);
-            }
         } else {
             //查套餐
             queryWrapper.eq(ShoppingCart::getSetmealId, shoppingCart.getSetmealId());
-            ShoppingCart getOne = shoppingCartService.getOne(queryWrapper);
-            Integer number = getOne.getNumber();
-            if (number != 1) {
-                getOne.setNumber(number - 1);
-                shoppingCartService.updateById(getOne);
-            } else {
-                shoppingCartService.removeById(getOne);
-            }
+        }
+        ShoppingCart getOne = shoppingCartService.getOne(queryWrapper);
+        Integer number = getOne.getNumber();
+        if (number != 1) {
+            getOne.setNumber(number - 1);
+            shoppingCartService.updateById(getOne);
+        } else {
+            shoppingCartService.removeById(getOne);
         }
         return R.success("");
     }
