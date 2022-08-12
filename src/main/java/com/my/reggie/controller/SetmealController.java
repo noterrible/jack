@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.my.reggie.common.R;
 import com.my.reggie.dto.SetmealDto;
 import com.my.reggie.entity.Category;
+import com.my.reggie.entity.Dish;
 import com.my.reggie.entity.Setmeal;
+import com.my.reggie.entity.SetmealDish;
 import com.my.reggie.service.CategoryService;
 import com.my.reggie.service.SetmealDishService;
 import com.my.reggie.service.SetmealService;
@@ -78,7 +80,13 @@ public class SetmealController {
         List<Setmeal> list = setmealService.list(queryWrapper);
         return R.success(list);
     }
-
+    @GetMapping("/dish/{id}")
+    public R<List<SetmealDish>> getDish(@PathVariable Long id){
+        LambdaQueryWrapper<SetmealDish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(id != null,SetmealDish::getSetmealId,id);
+        List<SetmealDish> setmealDishes = setmealDishService.list(queryWrapper);
+        return R.success(setmealDishes);
+    }
     @CacheEvict(value = "setmealCache", allEntries = true)
     @PostMapping
     @ApiOperation(value="保存新增的套餐信息接口")
