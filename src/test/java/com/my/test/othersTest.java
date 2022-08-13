@@ -2,7 +2,7 @@ package com.my.test;
 
 import org.junit.jupiter.api.Test;
 
-public class UploadFileTest {
+public class othersTest {
     //全局变量初值为0
     int a;
 
@@ -14,6 +14,11 @@ public class UploadFileTest {
         System.out.println(b.hashCode());
         b="2";
         System.out.println(b.hashCode());
-        
+        long c=1;
+        int d= (int)(c);
+        int e=1;
+        long f=e;
+        System.out.println(d);
+        System.out.println(f);
     }
 }

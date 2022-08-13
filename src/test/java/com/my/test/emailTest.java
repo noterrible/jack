@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.mail.MessagingException;
 
-public class test {
+public class emailTest {
     @Test
     public static void main(String[] args) {
         try {
