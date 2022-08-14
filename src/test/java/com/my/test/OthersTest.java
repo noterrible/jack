@@ -2,7 +2,7 @@ package com.my.test;
 
 import org.junit.jupiter.api.Test;
 
-public class othersTest {
+public class OthersTest {
     //全局变量初值为0
     int a;
 
