@@ -13,7 +13,7 @@ spring:
   redis:
     host: localhost
     port: 6379
-#    password: qq74263827
+    password: qq74263827
     database: 0 #默认16个数据库，现在是0号数据库
 mybatis-plus:
   configuration:
