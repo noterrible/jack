@@ -4,22 +4,31 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.my.reggie.common.BaseContext;
 import com.my.reggie.common.R;
+import com.my.reggie.dto.OrdersDto;
+import com.my.reggie.entity.OrderDetail;
 import com.my.reggie.entity.Orders;
+import com.my.reggie.service.OrderDetailService;
 import com.my.reggie.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Api(tags="订单相关接口")
 @RestController
 @RequestMapping("/order")
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderDetailService orderDetailService;
 
     @GetMapping("/page")
     @ApiOperation(value="订单分页显示接口")
@@ -43,13 +52,32 @@ public class OrderController {
 
     @GetMapping("/userPage")
     @ApiOperation(value="个人中心接口")
-    public R<Page> userPage(int page, int pageSize) {
+    public R<Page<OrdersDto>> userPage(int page, int pageSize) {
         Page pageInfo = new Page(page, pageSize);
+        Page ordersDtoPage = new Page(page, pageSize);
+        //先查订单
         LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Orders::getUserId, BaseContext.getCurrentId());
-        queryWrapper.orderByAsc(Orders::getCheckoutTime);
+        queryWrapper.orderByDesc(Orders::getCheckoutTime);
         orderService.page(pageInfo, queryWrapper);
-        return R.success(pageInfo);
+        //订单先拷贝到dtoppage
+        BeanUtils.copyProperties(pageInfo,ordersDtoPage,"records");
+        List<Orders> records=pageInfo.getRecords();
+        List<OrdersDto> ordersDtos=records.stream().map((item)->{
+                    OrdersDto ordersDto =new OrdersDto();
+                    BeanUtils.copyProperties(item,ordersDto);
+                    Long orderId=item.getId();
+                    //查询订单内详情
+                    LambdaQueryWrapper<OrderDetail> orderDetailLambdaQueryWrapper=new LambdaQueryWrapper<>();
+                    orderDetailLambdaQueryWrapper.eq(OrderDetail::getOrderId,orderId);
+                    List<OrderDetail> orderDetails=orderDetailService.list(orderDetailLambdaQueryWrapper);
+                    //设置订单内详情
+                    ordersDto.setOrderDetails(orderDetails);
+                    return ordersDto;
+                }
+                ).collect(Collectors.toList());
+        ordersDtoPage.setRecords(ordersDtos);
+        return R.success(ordersDtoPage);
     }
 
     @PutMapping
