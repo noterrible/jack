@@ -10,8 +10,8 @@
         <relativePath/>
         <!--  lookup parent from repository  -->
     </parent>
-    <groupId>com.itheima</groupId>
-    <artifactId>reggie_take_out</artifactId>
+    <groupId>com.my</groupId>
+    <artifactId>jack_take_out</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
