@@ -1,6 +1,6 @@
 package com.my.test;
 
-import com.my.reggie.common.SendEmail;
+import com.my.jack.utils.SendEmail;
 import org.junit.jupiter.api.Test;
 
 import javax.mail.MessagingException;

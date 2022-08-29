@@ -1,14 +1,14 @@
 package com.my.test;
 
-import com.my.reggie.ReggieApplication;
-import com.my.reggie.common.BaseContext;
-import com.my.reggie.entity.Employee;
-import com.my.reggie.service.EmployeeService;
+import com.my.jack.JackApplication;
+import com.my.jack.common.BaseContext;
+import com.my.jack.entity.Employee;
+import com.my.jack.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = ReggieApplication.class)
+@SpringBootTest(classes = JackApplication.class)
 public class EmployeeTest {
     @Autowired
     private EmployeeService employeeService;
