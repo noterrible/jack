@@ -6,7 +6,7 @@ target/
 log.path_IS_UNDEFINED
 .DS_Store
 offline_user.md
-./.gitignore
+.gitignore
 
 ### STS ###
 .apt_generated
