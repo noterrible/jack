@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.my.jack.common.BaseContext;
 import com.my.jack.common.R;
 import com.my.jack.entity.AddressBook;
+import com.my.jack.entity.User;
 import com.my.jack.service.AddressBookService;
+import com.my.jack.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +27,21 @@ public class AddressBookController {
 
     @Autowired
     private AddressBookService addressBookService;
-
+    @Autowired
+    private UserService userService;
     /**
      * 新增
      */
     @PostMapping
     @ApiOperation(value="保存新增的地址信息接口")
     public R<AddressBook> save(@RequestBody AddressBook addressBook) {
-        addressBook.setUserId(BaseContext.getCurrentId());
+        Long userId = BaseContext.getCurrentId();
+        addressBook.setUserId(userId);
         log.info("addressBook:{}", addressBook);
         addressBookService.save(addressBook);
+        User user = userService.getById(userId);
+        user.setPhone(addressBook.getPhone());
+        userService.updateById(user);
         return R.success(addressBook);
     }
 
