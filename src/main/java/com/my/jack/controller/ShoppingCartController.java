@@ -60,7 +60,7 @@ public class ShoppingCartController {
      * */
     @PostMapping("/sub")
     @ApiOperation(value = "从购物车减少菜品接口")
-    public R<String> sub(@RequestBody ShoppingCart shoppingCart) {
+    public R<ShoppingCart> sub(@RequestBody ShoppingCart shoppingCart) {
         LambdaQueryWrapper<ShoppingCart> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());
         if (shoppingCart.getDishId() != null) {
@@ -71,14 +71,16 @@ public class ShoppingCartController {
             queryWrapper.eq(ShoppingCart::getSetmealId, shoppingCart.getSetmealId());
         }
         ShoppingCart getOne = shoppingCartService.getOne(queryWrapper);
+        if(getOne==null)
+            return R.error("菜品已经移除！");
         Integer number = getOne.getNumber();
+        getOne.setNumber(number - 1);
         if (number != 1) {
-            getOne.setNumber(number - 1);
             shoppingCartService.updateById(getOne);
         } else {
             shoppingCartService.removeById(getOne);
         }
-        return R.success("");
+        return R.success(getOne);
     }
 
     /*
