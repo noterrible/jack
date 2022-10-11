@@ -25,6 +25,8 @@ public class User implements Serializable {
     @ApiModelProperty("手机号")
     private String phone;
 
+    @ApiModelProperty("qq邮箱号")
+    private String qqEmail;
 
     @ApiModelProperty("性别 0 女 1 男")
     private String sex;

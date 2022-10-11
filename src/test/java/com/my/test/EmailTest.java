@@ -9,7 +9,7 @@ public class EmailTest {
     @Test
     public static void main(String[] args) {
         try {
-            SendEmail.sendMassage("1265684394", String.valueOf(1234));
+            SendEmail.sendMassage("1265684394@qq.com", String.valueOf(1234));
         } catch (MessagingException e) {
             e.printStackTrace();
         }

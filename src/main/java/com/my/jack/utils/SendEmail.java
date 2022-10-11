@@ -45,7 +45,7 @@ public class SendEmail {
                 props.getProperty("mail.user"));
         message.setFrom(form);
         // 设置收件人的邮箱
-        InternetAddress to = new InternetAddress(email+"@qq.com");
+        InternetAddress to = new InternetAddress(email);
         message.setRecipient(RecipientType.TO, to);
 // 设置邮件标题
         message.setSubject("测试邮件");
