@@ -21,6 +21,9 @@ public class LoginCheckFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        /*
+        * 登陆放行
+        * */
         //获取请求的URI
         String requestURI = request.getRequestURI();
         //不需要过滤的页面
@@ -49,7 +52,7 @@ public class LoginCheckFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
-        //判断后台用户是否登录
+        //后台拦截
         if (request.getSession().getAttribute("employee") != null) {
             log.info("已登录，用户id为:" + request.getSession().getAttribute("employee"));
             //获取登录用户id
@@ -59,7 +62,7 @@ public class LoginCheckFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
-        //判断user用户是否登录
+        //用户拦截
         if (request.getSession().getAttribute("user") != null) {
             log.info("已登录，用户id为:" + request.getSession().getAttribute("user"));
             //获取登录用户id
